@@ -28,6 +28,7 @@ const batteryStore = {};
   let browser = await puppeteer.launch({
     args: [
       "--disable-dev-shm-usage",
+      "--force-device-scale-factor=2",
       "--no-sandbox",
       `--lang=${config.language}`,
       config.ignoreCertificateErrors && "--ignore-certificate-errors"
