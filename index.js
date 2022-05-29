@@ -238,19 +238,22 @@ async function renderUrlToImageAsync(browser, pageConfig, url, path) {
     ]);
 
     let size = {
-      width: Number(pageConfig.renderingScreenSize.width),
-      height: Number(pageConfig.renderingScreenSize.height)
+      width: Number(pageConfig.renderingScreenSize.width)/Number(pageConfig.scaling),
+      height: Number(pageConfig.renderingScreenSize.height)/Number(pageConfig.scaling),
+      deviceScaleFactor: Number(pageConfig.scaling)
     };
 
     if (pageConfig.rotation % 180 > 0) {
       size = {
-        width: size.height,
-        height: size.width
+        width: size.height/Number(pageConfig.scaling),
+        height: size.width/Number(pageConfig.scaling),
+        deviceScaleFactor: Number(pageConfig.scaling)
       };
     }
 
     await page.setViewport(size);
     const startTime = new Date().valueOf();
+
     await page.goto(url, {
       waitUntil: ["domcontentloaded", "load", "networkidle0"],
       timeout: config.renderingTimeout
@@ -267,7 +270,6 @@ async function renderUrlToImageAsync(browser, pageConfig, url, path) {
           width: calc(${size.width}px / ${pageConfig.scaling});
           height: calc(${size.height}px / ${pageConfig.scaling});
           transform-origin: 0 0;
-          transform: scale(${pageConfig.scaling});
           overflow: hidden;
         }`
     });
