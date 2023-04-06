@@ -267,8 +267,8 @@ async function renderUrlToImageAsync(browser, pageConfig, url, path) {
     await page.addStyleTag({
       content: `
         body {
-          width: calc(${size.width}px / ${pageConfig.scaling});
-          height: calc(${size.height}px / ${pageConfig.scaling});
+          width: calc(${size.width}px /* ${pageConfig.scaling} */);
+          height: calc(${size.height}px /* ${pageConfig.scaling} */);
           transform-origin: 0 0;
           overflow: hidden;
         }`
